@@ -12,7 +12,6 @@
     display: grid;
     grid-template-rows: 1fr auto 1fr;
     overflow: auto;
-    
 }
 
 .title-bar {
@@ -22,6 +21,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 30px;
+    box-shadow: 3px 3px solid rgba(0, 0, 0, 0.5);
 }
 
 .logo,
@@ -35,6 +35,15 @@
 
 .main-content {
     background-color: blueviolet;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.book-card {
+    height: 100px;
 }
 
 footer {
