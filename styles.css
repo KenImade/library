@@ -3,19 +3,19 @@
 :root, body {
     margin: 0;
     padding: 0;
-    width: 100vw;
+    width: 100%;
     background-color: #FFFBE9;
     font-family: 'Rubik', sans-serif;
 }
 
 .container {
     display: grid;
-    grid-template-rows: 1fr auto 1fr;
+    grid-template-rows: 1fr auto 0.8fr;
     overflow: auto;
 }
 
 .title-bar {
-    background-color: #E3CAA5;
+    background-color: #AD8B73;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -34,22 +34,42 @@
 }
 
 .main-content {
-    background-color: blueviolet;
+    background-color: #CEAB93;
+    padding: 20px;
 }
 
 .cards {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px;
 }
 
 .book-card {
-    height: 100px;
+    background-color: #FFFBE9;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+
+    padding: 15px;
 }
 
 footer {
-    background-color: grey;
+    background-color: #E3CAA5;
 }
 
-.add-book-btn {
-    height: 40px;
+.add-book {
+    position: fixed;
+    background-color: #FFFBE9;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    top: 12%;
+    right: 20px;
+}
+
+.add-book .content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
