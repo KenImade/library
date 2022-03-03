@@ -46,13 +46,12 @@ body {
 
 .add-book {
     position: fixed;
-    background-color: #42C2FF;
+    background-color: none;
     border-radius: 50%;
     width: 60px;
     height: 60px;
     top: 12%;
     right: 20px;
-    border: 3px solid rgba(0, 0, 0, 0.5);
 }
 
 .add-book .content {
