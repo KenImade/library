@@ -1,3 +1,15 @@
+// get the form modal
+var formModal = document.getElementById("add-book-modal");
+
+// get the span to close modal
+var closeModalBtn = document.getElementsByClassName("close")[0];
+
+// When the user clicks on span <x>, close the modal
+closeModalBtn.onclick = function() {
+    formModal.style.display = "none";
+}
+
+
 let myLibrary = [];
 
 function Book(title, author, pages, readStatus) {
