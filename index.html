@@ -10,43 +10,106 @@
     <title>My Book Library</title>
 </head>
 <body>
-    <div class="container">
-        <header class="title-bar">
-            <div class="title-box">
-                <h1 class="logo">My Library</h1>
-                <h5 class="quote">People never change unless they meet new people, visit new places, or<em> read new books.</em></h5>
-            </div>
-        </header> 
+    <header class="title-bar">
+        <div class="title-box">
+            <h1 class="logo">My Library</h1>
+            <h5 class="quote">People never change unless they meet new people, visit new places, or<em> read new books.</em></h5>
+        </div>
+    </header> 
 
-        <div class="main-content">
+    <div class="main-content">
 
-            <div class="add-book">
-                <div class="content">
-                   <img src="./assets/img/book.png" alt="">
-                </div>
-            </div>
-
-            <div class="cards">
-                <div class="book-card">
-                    <h3 class="book-title">The Richest Man in Babylon</h3>
-                    <p class="book-author">George Clayson</p>
-                    <p class="no-of-pages">200 pages</p>
-                    <div class="card-btns">
-                        <button class="read-status">Read</button>
-                        <button class="delete">Delete</button>
-                    </div>
-                </div>
-                
-            </div>
+        <div class="add-book">
+            <button class="add-book-btn content" id="new-book-btn">
+               <img src="./assets/img/book.png" alt="">
+            </button>
         </div>
 
-        <footer>
-            <div>
-                <p>Website built by Kenneth Imade</p>
-                <p><a href="https://www.flaticon.com/free-icons/book" title="book icons">Book icons created by juicy_fish - Flaticon</a></p>
+        <div class="modal" id="add-book-modal">
+            <span class="close">&times;</span>
+            <form action="add-book-form" id="addBookForm" class="add-book-form">
+                <h3>Add New Book</h3>
+                <div class="form-input">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-input">
+                    <label for="author">Author:</label>
+                    <input type="text" id="author" name="author" required>
+                </div>
+                <div class="form-input">
+                    <label for="pages">Pages:</label>
+                    <input type="number" id="pages" name="pages" min=1 required>
+                </div>
+
+                <p>Have you read the book?</p>
+                <div class="form-input">
+                    <label for="Yes">Yes</label>
+                    <input type="radio" id="Yes" name="readStatus" value="yes">
+                    <label for="No">No</label>
+                    <input type="radio" id="No" name="readStatus" value="no">
+                </div>
+
+                <button class="submit-btn">Add Book</button>
+            </form>
+        </div>
+
+        <div class="cards">
+            <div class="book-card">
+                <h3 class="book-title">The Richest Man in Babylon</h3>
+                <p class="book-author">George Clayson</p>
+                <p class="no-of-pages">200 pages</p>
+                <div class="card-btns">
+                    <button class="read-status">Read</button>
+                    <button class="delete">Delete</button>
+                </div>
             </div>
-        </footer>
+            <div class="book-card">
+                <h3 class="book-title">The Richest Man in Babylon</h3>
+                <p class="book-author">George Clayson</p>
+                <p class="no-of-pages">200 pages</p>
+                <div class="card-btns">
+                    <button class="read-status">Read</button>
+                    <button class="delete">Delete</button>
+                </div>
+            </div>
+            <div class="book-card">
+                <h3 class="book-title">The Richest Man in Babylon</h3>
+                <p class="book-author">George Clayson</p>
+                <p class="no-of-pages">200 pages</p>
+                <div class="card-btns">
+                    <button class="read-status">Read</button>
+                    <button class="delete">Delete</button>
+                </div>
+            </div>
+            <div class="book-card">
+                <h3 class="book-title">The Richest Man in Babylon</h3>
+                <p class="book-author">George Clayson</p>
+                <p class="no-of-pages">200 pages</p>
+                <div class="card-btns">
+                    <button class="read-status">Read</button>
+                    <button class="delete">Delete</button>
+                </div>
+            </div>
+            <div class="book-card">
+                <h3 class="book-title">The Richest Man in Babylon</h3>
+                <p class="book-author">George Clayson</p>
+                <p class="no-of-pages">200 pages</p>
+                <div class="card-btns">
+                    <button class="read-status">Read</button>
+                    <button class="delete">Delete</button>
+                </div>
+            </div>
+                
+        </div>
     </div>
+
+    <footer>
+        <div>
+            <p>Website built by Kenneth Imade</p>
+            <p><a href="https://www.flaticon.com/free-icons/book" title="book icons">Book icons created by juicy_fish - Flaticon</a></p>
+        </div>
+    </footer>
     <script src="./app.js"></script>
 </body>
 </html>
