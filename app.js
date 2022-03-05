@@ -52,15 +52,11 @@ Book.prototype.readBook = function(status) {
 // function to add book to library
 const addBookToLibrary = (ev) => {
     ev.preventDefault();
+
     var bookName = document.getElementById("title").value;
     var authorName = document.getElementById("author").value;
     var numberOfPages = document.getElementById("pages").value;
     var readBook = document.querySelector('input[name="readStatus"]:checked').value;
-
-    console.log(bookName)
-    console.log(authorName)
-    console.log(numberOfPages)
-    console.log(readBook)
     
     const newBook = new Book(bookName, authorName, numberOfPages);
     newBook.readBook(readBook);
@@ -68,17 +64,24 @@ const addBookToLibrary = (ev) => {
     myLibrary.push(newBook)
     document.querySelector('form').reset();
     formModal.style.display = "none";
+
+    displayBooksInLibrary()
 }
 
 function displayBooksInLibrary() {
+    var cardList = document.getElementById("cards-carousel");
+    cardList.textContent = "";
+
     for (var i = 0; i < myLibrary.length+1; i++) {
-        console.log(myLibrary[i]);
+        book = myLibrary[i];
+        const bookCard = createBookCard(book);
+        cardList.appendChild(bookCard);
     }
 }
 
 // function to create book card
 const createBookCard = (book) => {
-    const card = docment.createElement("div");
+    const card = document.createElement("div");
     card.className = "book-card";
 
     const title = document.createElement("h3");
@@ -98,9 +101,11 @@ const createBookCard = (book) => {
 
     const readStatusButton = document.createElement("button");
     readStatusButton.className = "read-status";
+    readStatusButton.innerHTML = "Read";
     
     const deleteButton = document.createElement("button");
     deleteButton.className = "delete";
+    deleteButton.innerHTML = "Delete";
 
     // append buttons to card-btns
     bookButtons.appendChild(readStatusButton);
@@ -111,4 +116,6 @@ const createBookCard = (book) => {
     card.appendChild(author);
     card.appendChild(pages)
     card.appendChild(bookButtons);
+
+    return card;
 }
