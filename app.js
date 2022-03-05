@@ -75,3 +75,40 @@ function displayBooksInLibrary() {
         console.log(myLibrary[i]);
     }
 }
+
+// function to create book card
+const createBookCard = (book) => {
+    const card = docment.createElement("div");
+    card.className = "book-card";
+
+    const title = document.createElement("h3");
+    title.className = "book-title";
+    title.innerText = book.title;
+
+    const author = document.createElement("p");
+    author.className = "book-author";
+    author.innerText = book.author;
+
+    const pages = document.createElement("p");
+    pages.className = "no-of-pages";
+    pages.innerText = book.pages + " pages";
+
+    const bookButtons = document.createElement("div");
+    bookButtons.className = "card-btns";
+
+    const readStatusButton = document.createElement("button");
+    readStatusButton.className = "read-status";
+    
+    const deleteButton = document.createElement("button");
+    deleteButton.className = "delete";
+
+    // append buttons to card-btns
+    bookButtons.appendChild(readStatusButton);
+    bookButtons.appendChild(deleteButton);
+
+    // append book properties to card 
+    card.appendChild(title);
+    card.appendChild(author);
+    card.appendChild(pages)
+    card.appendChild(bookButtons);
+}
