@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
 let myLibrary = [];
 
 // Book object
-function Book(title, author, pages, readStatus) {
+function Book(title, author, pages) {
     this.id = Date.now();
     this.title = title;
     this.author = author;
@@ -100,11 +100,11 @@ const createBookCard = (book) => {
     bookButtons.className = "card-btns";
 
     const readStatusButton = document.createElement("button");
-    readStatusButton.className = "read-status";
+    readStatusButton.setAttribute = ("id", "read-status");
     readStatusButton.innerHTML = "Read";
     
     const deleteButton = document.createElement("button");
-    deleteButton.className = "delete";
+    deleteButton.setAttribute = ("id", "delete");
     deleteButton.innerHTML = "Delete";
 
     // append buttons to card-btns
@@ -119,3 +119,15 @@ const createBookCard = (book) => {
 
     return card;
 }
+
+// function to delete book from library
+document.getElementById("cards-carousel").addEventListener("click", (event)=>{
+    if(event.target.tagName === "BUTTON") {
+        const button = event.target;
+        const cardDiv = button.parentNode.parentNode;
+        const cardList = button.parentNode.parentNode.parentNode;
+        if(button.textContent === "Delete") {
+            cardList.removeChild(cardDiv);
+        }
+    }
+})
