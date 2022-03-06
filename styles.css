@@ -139,13 +139,31 @@ body {
 }
 
 .submit-btn,
-.book-card .card-btns button{
+#delete {
     height: 40px;
     width: 90px;
     border-radius: 5%;
     font-weight: 700;
 
     background-color: #FFAD60;
+}
+
+.card-btns #read {
+    height: 40px;
+    width: 90px;
+    border-radius: 5%;
+    font-weight: 700;
+
+    background-color: #FFAD60;
+}
+
+.card-btns #not-read {
+    height: 40px;
+    width: 90px;
+    border-radius: 5%;
+    font-weight: 700;
+
+    background-color: grey;
 }
 
 footer {

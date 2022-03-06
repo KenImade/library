@@ -100,11 +100,19 @@ const createBookCard = (book) => {
     bookButtons.className = "card-btns";
 
     const readStatusButton = document.createElement("button");
-    readStatusButton.setAttribute = ("id", "read-status");
-    readStatusButton.innerHTML = "Read";
+
+    if (book.readStatus === true) {
+        console.log("Getting into if condition")
+        readStatusButton.setAttribute("id", "read");
+        readStatusButton.innerHTML = "Read";
+    } else {
+        console.log("reached here too")
+        readStatusButton.setAttribute("id", "not-read");
+        readStatusButton.innerHTML = "Not Read";
+    }
     
     const deleteButton = document.createElement("button");
-    deleteButton.setAttribute = ("id", "delete");
+    deleteButton.setAttribute("id", "delete");
     deleteButton.innerHTML = "Delete";
 
     // append buttons to card-btns
@@ -142,5 +150,44 @@ function deleteBookFromLibrary(title) {
             myLibrary.splice(i, 1);
             break
         }
+    }
+}
+
+// get readStatus button
+document.getElementById("cards-carousel").addEventListener("click", (event)=>{
+    if(event.target.tagName === "BUTTON") {
+
+        const button = event.target;
+        const cardDiv = button.parentNode.parentNode;
+        const bookTitle = cardDiv.childNodes[0].textContent;
+        var book = getBookFromLibrary(bookTitle);
+
+        changeReadStatus(book);
+
+        if(button.textContent === "Read") {
+            button.textContent = "Not Read";
+            button.setAttribute("id", "not-read");
+        } else {
+            button.textContent = "Read";
+            button.setAttribute("id", "read");
+        }
+    }
+})
+
+// get book object
+function getBookFromLibrary(title) {
+    for (var i = 0; i < myLibrary.length+1; i++) {
+        if (myLibrary[i].title === title) {
+            return myLibrary[i];
+        }
+    }
+}
+
+// function to change the status from read to unread
+function changeReadStatus(book) {
+    if (book.readStatus === true) {
+        book.readStatus = false;
+    } else {
+        book.readStatus = true;
     }
 }
