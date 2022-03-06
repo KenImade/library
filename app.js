@@ -73,7 +73,7 @@ function displayBooksInLibrary() {
     cardList.textContent = "";
 
     for (var i = 0; i < myLibrary.length+1; i++) {
-        book = myLibrary[i];
+        var book = myLibrary[i];
         const bookCard = createBookCard(book);
         cardList.appendChild(bookCard);
     }
@@ -127,7 +127,20 @@ document.getElementById("cards-carousel").addEventListener("click", (event)=>{
         const cardDiv = button.parentNode.parentNode;
         const cardList = button.parentNode.parentNode.parentNode;
         if(button.textContent === "Delete") {
+            var bookTitle = cardDiv.childNodes[0].textContent;
+            console.log(bookTitle);
+            deleteBookFromLibrary(bookTitle);
+            // console.log(cardDiv.childNodes[1].textContent);
             cardList.removeChild(cardDiv);
         }
     }
 })
+
+function deleteBookFromLibrary(title) {
+    for (var i = 0; i < myLibrary.length+1; i++) {
+        if (myLibrary[i].title === title) {
+            myLibrary.splice(i, 1);
+            break
+        }
+    }
+}
