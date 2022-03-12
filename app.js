@@ -1,14 +1,30 @@
 class Library {
 
-    constructor() {
-        this.bookArray = [];
-    };
+    bookArray = [];
+
     addBook = (book) => {
         this.bookArray.push(book);
     };
 
     getBooks = () => {
         return this.bookArray;
+    };
+
+    getBook = (title) => {
+        for (let i = 0; i < this.bookArray.length + 1; i++) {
+            if (this.bookArray[i].title === title) {
+                return this.bookArray[i];
+            }
+        }
+    };
+
+    deleteBook = (title)=> {
+        for (let i = 0; i < this.bookArray.length+1; i++) {
+            if (this.bookArray[i].title === title) {
+                this.bookArray.splice(i, 1);
+                break
+            }
+        }
     };
 };
 
@@ -19,123 +35,32 @@ class Book {
         this.title = title;
         this.author = author;
         this.pages = pages;
-    }
+    };
 
     readBook = (status) => {
         if (status = 'yes') {
-            return readStatus = true;
+            return this.readStatus = true;
         } else {
             return this.readStatus = false;
         }
-    }
-}
+    };
 
+    changeReadStatus = () => {
+        if (this.readStatus === true) {
+            this.readStatus = false;
+        } else {
+            this.readStatus = true;
+        }
+    };
+};
 
-// get the form modal
-var formModal = document.getElementById("add-book-modal");
-
-// get the span to close modal
-var closeModalBtn = document.getElementsByClassName("close")[0];
-
-//Get button to open the modal
-var openModalBtn = document.getElementById("new-book-btn");
-
-// When the user clicks on the button, open the modal
-openModalBtn.onclick = function() {
-    formModal.style.display = "block"
-}
-
-// When the user clicks on span <x>, close the modal
-closeModalBtn.onclick = function() {
-    formModal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if(event.target == formModal) {
-        formModal.style.display = "none";
-    }
-}
-
-// get button to submit form
-document.addEventListener("DOMContentLoaded", ()=> {
-    document.getElementById("submit-btn").addEventListener("click", addBookToLibrary);
-});
-
-// Array to store books
-let myLibrary = [];
-
-// Book object
-function Book(title, author, pages) {
-    this.id = Date.now();
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-}
-
-// Read Status of book
-Book.prototype.readBook = function(status) {
-    if (status == 'yes') {
-        return this.readStatus = true;
-    } else {
-        return this.readStatus = false;
-    }
-}
-
-// function to add book to library
-const addBookToLibrary = (ev) => {
-    ev.preventDefault();
-
-    var bookName = document.getElementById("title").value;
-    var authorName = document.getElementById("author").value;
-    var numberOfPages = document.getElementById("pages").value;
-    var readBook = document.querySelector('input[name="readStatus"]:checked').value;
-
-    console.log(readBook);
-
-    if (validateUserInput(bookName, authorName, numberOfPages)) {
-        const newBook = new Book(bookName, authorName, numberOfPages);
-        newBook.readBook(readBook);
-
-        myLibrary.push(newBook)
-        document.querySelector('form').reset();
-        formModal.style.display = "none";
-
-        displayBooksInLibrary()
-    } else {
-        alert("Invalid Input");
-        document.querySelector('form').reset();
-        formModal.style.display = "block";
-    }
-}
-
-function validateUserInput(title, author, pages) {
-    if (title === "" || author === "" || pages === "") {
-        return false;
-    } else {
-        return true;
-    }
-}
-
-function displayBooksInLibrary() {
-    var cardList = document.getElementById("cards-carousel");
-    cardList.textContent = "";
-
-    for (var i = 0; i < myLibrary.length+1; i++) {
-        var book = myLibrary[i];
-        const bookCard = createBookCard(book);
-        cardList.appendChild(bookCard);
-    }
-}
-
-// function to create book card
-const createBookCard = (book) => {
+const createCard = (book) => {
     const card = document.createElement("div");
     card.className = "book-card";
 
-    const title = document.createElement("h3");
-    title.className = "book-title";
-    title.innerText = book.title;
+    const bookTitle = document.createElement("h3");
+    bookTitle.className = "book-title";
+    bookTitle.innerText = book.title;
 
     const author = document.createElement("p");
     author.className = "book-author";
@@ -151,15 +76,15 @@ const createBookCard = (book) => {
     const readStatusButton = document.createElement("button");
 
     if (book.readStatus === true) {
-        console.log("Getting into if condition")
+        // console.log("Getting into if condition")
         readStatusButton.setAttribute("id", "read");
         readStatusButton.innerHTML = "Read";
     } else {
-        console.log("reached here too")
+        // console.log("reached here too")
         readStatusButton.setAttribute("id", "not-read");
         readStatusButton.innerHTML = "Not Read";
     }
-    
+
     const deleteButton = document.createElement("button");
     deleteButton.setAttribute("id", "delete");
     deleteButton.innerHTML = "Delete";
@@ -169,74 +94,117 @@ const createBookCard = (book) => {
     bookButtons.appendChild(deleteButton);
 
     // append book properties to card 
-    card.appendChild(title);
+    card.appendChild(bookTitle);
     card.appendChild(author);
     card.appendChild(pages)
     card.appendChild(bookButtons);
 
     return card;
-}
+};
 
-// function to delete book from library
-document.getElementById("cards-carousel").addEventListener("click", (event)=>{
-    if(event.target.tagName === "BUTTON") {
-        const button = event.target;
-        const cardDiv = button.parentNode.parentNode;
-        const cardList = button.parentNode.parentNode.parentNode;
-        if(button.textContent === "Delete") {
-            var bookTitle = cardDiv.childNodes[0].textContent;
-            console.log(bookTitle);
-            deleteBookFromLibrary(bookTitle);
-            // console.log(cardDiv.childNodes[1].textContent);
-            cardList.removeChild(cardDiv);
+const displayController = (() => {
+    let cardList = document.getElementById("cards-carousel");
+
+    let myLibrary =  new Library();
+
+    let books = myLibrary.getBooks();
+
+    let formModal = document.getElementById("add-book-modal");
+
+    let closeModalBtn = document.getElementsByClassName("close")[0];
+
+    let openModalBtn = document.getElementById("new-book-btn");
+
+    let submitFormBtn = document.getElementById("submit-btn");
+
+    submitFormBtn.onclick = (ev) => {
+        updateLibrary(ev);
+    };
+    
+    openModalBtn.onclick = function() {
+        formModal.style.display = "block"
+    };
+
+    closeModalBtn.onclick = function() {
+        formModal.style.display = "none";
+    };
+
+    window.onclick = function(event) {
+        if(event.target == formModal) {
+            formModal.style.display = "none";
         }
-    }
-})
+    };
 
-function deleteBookFromLibrary(title) {
-    for (var i = 0; i < myLibrary.length+1; i++) {
-        if (myLibrary[i].title === title) {
-            myLibrary.splice(i, 1);
-            break
-        }
-    }
-}
+    cardList.onclick = (event) => {
+        if(event.target.tagName === "BUTTON") {
+            const button = event.target;
+            const cardDiv = button.parentNode.parentNode;
+            const cardList = button.parentNode.parentNode.parentNode;
+            if(button.textContent === "Delete") {
+                let bookTitle = cardDiv.childNodes[0].textContent;
+                // console.log(bookTitle);
+                myLibrary.deleteBook(bookTitle);
+                // console.log(cardDiv.childNodes[1].textContent);
+                cardList.removeChild(cardDiv);
+            }
 
-// get readStatus button
-document.getElementById("cards-carousel").addEventListener("click", (event)=>{
-    if(event.target.tagName === "BUTTON") {
+            if(button.textContent === "Read") {
+                let bookTitle = cardDiv.childNodes[0].textContent;
+                let book = myLibrary.getBook(bookTitle);
 
-        const button = event.target;
-        const cardDiv = button.parentNode.parentNode;
-        const bookTitle = cardDiv.childNodes[0].textContent;
-        var book = getBookFromLibrary(bookTitle);
+                book.changeReadStatus();
 
-        changeReadStatus(book);
+                button.textContent = "Not Read";
+                button.setAttribute("id", "not-read");
+            } else {
+                button.textContent = "Read";
+                button.setAttribute("id", "read");
+            }
 
-        if(button.textContent === "Read") {
-            button.textContent = "Not Read";
-            button.setAttribute("id", "not-read");
+        };
+    };
+
+    const updateLibrary = (ev) => {
+        ev.preventDefault();
+
+        let bookName = document.getElementById("title").value;
+        let authorName = document.getElementById("author").value;
+        let numberOfPages = document.getElementById("pages").value;
+        let readBook = document.querySelector('input[name="readStatus"]:checked').value;
+    
+        if (validateInput(bookName, authorName, numberOfPages)) {
+            const newBook = new Book(bookName, authorName, numberOfPages);
+            newBook.readBook(readBook);
+    
+            myLibrary.addBook(newBook)
+            document.querySelector('form').reset();
+            formModal.style.display = "none";
         } else {
-            button.textContent = "Read";
-            button.setAttribute("id", "read");
+            alert("Invalid Input");
+            document.querySelector('form').reset();
+            formModal.style.display = "block";
         }
-    }
-})
 
-// get book object
-function getBookFromLibrary(title) {
-    for (var i = 0; i < myLibrary.length+1; i++) {
-        if (myLibrary[i].title === title) {
-            return myLibrary[i];
+        displayBooks()
+    };
+
+    const validateInput = (title, author, pages) => {
+        if (title === "" || author === "" || pages === "") {
+            return false;
+        } else {
+            return true;
         }
-    }
-}
+    };
 
-// function to change the status from read to unread
-function changeReadStatus(book) {
-    if (book.readStatus === true) {
-        book.readStatus = false;
-    } else {
-        book.readStatus = true;
-    }
-}
+    const displayBooks = () => {
+        cardList.textContent = "";
+        for (let i = 0; i < books.length+1; i++) {
+            let book = books[i];
+            const bookCard = createCard(book);
+            cardList.appendChild(bookCard);
+        };
+    };
+
+    return {myLibrary};
+})();
+
