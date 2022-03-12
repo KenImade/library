@@ -1,3 +1,36 @@
+class Library {
+
+    constructor() {
+        this.bookArray = [];
+    };
+    addBook = (book) => {
+        this.bookArray.push(book);
+    };
+
+    getBooks = () => {
+        return this.bookArray;
+    };
+};
+
+class Book {
+    readStatus;
+
+    constructor(title, author, pages) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+    }
+
+    readBook = (status) => {
+        if (status = 'yes') {
+            return readStatus = true;
+        } else {
+            return this.readStatus = false;
+        }
+    }
+}
+
+
 // get the form modal
 var formModal = document.getElementById("add-book-modal");
 
@@ -57,15 +90,31 @@ const addBookToLibrary = (ev) => {
     var authorName = document.getElementById("author").value;
     var numberOfPages = document.getElementById("pages").value;
     var readBook = document.querySelector('input[name="readStatus"]:checked').value;
-    
-    const newBook = new Book(bookName, authorName, numberOfPages);
-    newBook.readBook(readBook);
 
-    myLibrary.push(newBook)
-    document.querySelector('form').reset();
-    formModal.style.display = "none";
+    console.log(readBook);
 
-    displayBooksInLibrary()
+    if (validateUserInput(bookName, authorName, numberOfPages)) {
+        const newBook = new Book(bookName, authorName, numberOfPages);
+        newBook.readBook(readBook);
+
+        myLibrary.push(newBook)
+        document.querySelector('form').reset();
+        formModal.style.display = "none";
+
+        displayBooksInLibrary()
+    } else {
+        alert("Invalid Input");
+        document.querySelector('form').reset();
+        formModal.style.display = "block";
+    }
+}
+
+function validateUserInput(title, author, pages) {
+    if (title === "" || author === "" || pages === "") {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 function displayBooksInLibrary() {
